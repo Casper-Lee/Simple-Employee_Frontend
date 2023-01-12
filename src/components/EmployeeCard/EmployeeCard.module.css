@@ -1,0 +1,53 @@
+.item {
+  width: 90%;
+  margin: 1rem;
+  padding: 1rem;
+  /* display: flex; */
+  /* justify-content: space-between; */
+  /* align-items: flex-end; */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  background-color: #c2e7f0;
+}
+
+.item p {
+  margin: 0;
+  margin-bottom: 0.25rem;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.column {
+  flex: 50%;
+}
+
+.name {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.icons {
+  width: 60px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.editicon {
+  color: rgb(233, 186, 85);
+}
+
+.deleteiconbutton{
+  background: none;
+  border: none;
+}
+
+.deleteiconbutton:hover{
+  cursor: pointer;
+}
+
+.deleteicon {
+  color: red;
+}

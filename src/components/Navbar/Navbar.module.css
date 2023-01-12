@@ -1,0 +1,20 @@
+.navbar{
+    padding: 0 50px;
+}
+
+.button {
+    background-color: green;
+    color: white;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    width: 200px;
+    justify-content: center;
+}
+
+
+@media screen and (max-width: 899px) {
+    .button {
+      display: none;
+    }
+  }

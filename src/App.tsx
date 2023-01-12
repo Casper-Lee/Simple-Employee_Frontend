@@ -1,25 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useCallback, useEffect } from "react";
+import{Redirect, Route, Switch } from "react-router-dom";
+import Layout from "./components/Layout/Layout";
+import Homepage from "./pages/Homepage";
+import EditEmployee from "./pages/EditEmployee";
+import CreateEmployee from "./pages/CreateEmployee";
+import { getAllEmployees } from "./store/employeeSlice";
+import { useAppDispatch } from "./store/store";
 
 function App() {
+  const dispatch = useAppDispatch()
+
+  const initApp = useCallback(async() => {
+    await dispatch(getAllEmployees())
+  }, [dispatch])
+
+  useEffect(() => {
+    initApp()
+  }, [initApp])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+        <Switch>
+          <Route path='/' exact>
+            <Redirect to='/employee'/>
+          </Route>
+          <Route exact path="/employee" > 
+          <Homepage />
+          </Route>
+          <Route path='/employee/:employeeId'>
+          <EditEmployee />
+          </Route>
+          <Route path='/new-employee'>
+            <CreateEmployee />
+          </Route>
+        </Switch>
+    </Layout>
   );
 }
 

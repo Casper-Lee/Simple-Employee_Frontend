@@ -1,9 +1,4 @@
-// export interface Employee {
-//   name: string;
-//   salary: string;
-//   department: string;
-// }
-
+import { Status } from "../store/employeeSlice"
 export interface Employee{
   id: number,
   name: string,
@@ -14,4 +9,6 @@ export interface Employee{
 export interface EmployeeState{
   employees: Employee[],
   singleEmployee : Employee | null
+  status: Status
+  errMsg: any
 }

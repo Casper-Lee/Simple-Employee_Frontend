@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { createEmployee } from "../../store/employeeSlice";
-import { useAppDispatch } from "../../store/store";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { toast } from 'react-toastify';
 
 import Card from "../Card/Card";
 import classes from "./EmployeeForm.module.css";
@@ -9,6 +10,11 @@ import classes from "./EmployeeForm.module.css";
 const EmployeeForm: React.FC = (props: any, {employees, count, page, onChange, itemsPerPage = 10}) => {
   const dispatch = useAppDispatch();
   const history = useHistory()
+  const {status}  = useAppSelector((state) => state.employee)
+  const {errMsg} = useAppSelector((state) => state.employee)
+  const notify = (msg: string) => toast(msg)
+
+  // console.log('Error Message:',errMsg)
 
   const [employee, setEmployee] = useState({
     name: "",
@@ -17,14 +23,24 @@ const EmployeeForm: React.FC = (props: any, {employees, count, page, onChange, i
     department: "HR",
   });
 
-  console.log('haha');
+  useEffect(() => {
+    if(status === 'rejected'){
+      console.log('Employee Rejected:', status)
+      console.log(errMsg.response.data)
+      notify(errMsg.response.data.message)
+      notify('Cannot Create Employee')
+    }else if(status === 'fulfilled') {
+      console.log('Employee updated:', status)
+      notify('Employee created!')
+      history.push('/')
+    }
+  },[status, history])
 
   const submitHandler = (event: any) => {
     event.preventDefault();
 
-    console.log('emp departmentt:',employee.department);
+    console.log('emp department:',employee.department);
     
-
     let data = {
       name: employee.name,
       salary: employee.salary,
@@ -33,7 +49,7 @@ const EmployeeForm: React.FC = (props: any, {employees, count, page, onChange, i
 
     dispatch(createEmployee(data));
 
-    history.push('/')
+    // history.push('/')
   };
 
   return (

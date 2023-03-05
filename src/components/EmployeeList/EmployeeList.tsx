@@ -4,9 +4,32 @@ import { useAppDispatch, useAppSelector } from "../../store/store";
 import EmployeeCard from "../EmployeeCard/EmployeeCard";
 import ReactPaginate from "react-paginate";
 import classes from "./EmployeeList.module.css";
+import { useAuth } from "../../store/authContext";
+import { getToken } from "../../store/handler";
 
-const EmployeeList = (props: any) => {
-  const { employees } = useAppSelector((state) => state.employee);
+
+
+ 
+
+const EmployeeList:React.FC = () => {
+  const { isAuthenticated, setAuthenticated } = useAuth();
+  const employeesDepartment = {
+    "1" : "PS",
+    "2" : "HR",
+    "3" : "ADMIN"
+  }
+
+  const checkAuthenticated = () => {
+    const token = getToken()
+
+    if(token){
+      setAuthenticated(true)
+    }else{
+      setAuthenticated(false)
+    }
+  }
+
+  const { employees }: any = useAppSelector((state) => state.employee);
   const dispatch = useAppDispatch();
 
   const [pageNumber, setPageNumber] = useState(0);
@@ -14,7 +37,7 @@ const EmployeeList = (props: any) => {
   let EmployeePerPage = 10;
   const pagesVisted = pageNumber * EmployeePerPage;
 
-  // console.log(employees);
+  console.log('Employees:',employees);
 
   // if (Array.isArray(employees)) {
   //   console.log("Is an array");
@@ -23,12 +46,13 @@ const EmployeeList = (props: any) => {
   // }
 
   useEffect(() => {
+    checkAuthenticated()
     dispatch(getAllEmployees());
   }, [dispatch]);
 
   const displayEmployees = employees
     .slice(pagesVisted, pagesVisted + EmployeePerPage)
-    .map((employee) => {
+    .map((employee: { id: number; name: string; salary: number; department_id: number; }) => {
       return (
         <ul className={classes.employeeul}>
           <EmployeeCard
@@ -36,7 +60,7 @@ const EmployeeList = (props: any) => {
             id={employee.id}
             name={employee.name}
             salary={employee.salary}
-            department={employee.department}
+            department={ employeesDepartment[(employee.department_id.toString() as "1" | "2" | "3")]}
           />
         </ul>
       );
@@ -61,7 +85,7 @@ const EmployeeList = (props: any) => {
           containerClassName={classes.paginationButtons}
           previousLinkClassName={classes.previousBtn}
           nextLinkClassName={classes.nextBttn}
-          // disabledClassName={classes.paginationDisabled}
+          disabledClassName={classes.paginationDisabled}
           activeClassName={classes.paginationActive}
         />
       </div>

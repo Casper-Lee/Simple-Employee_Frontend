@@ -1,0 +1,28 @@
+.logincontainer{
+    display: flex;
+    justify-content: center;
+}
+
+.form {
+    background-color: aqua;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 50%;
+    height: 250px;
+}
+
+.loginbutton{
+    border: none;
+    background-color: #E8B045;
+    width: 100px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.loginbutton:hover{
+    border: black 2px solid;
+    background-color: aqua;
+    cursor: pointer;
+}

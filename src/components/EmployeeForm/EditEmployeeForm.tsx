@@ -12,11 +12,11 @@ import classes from "./EmployeeForm.module.css";
 import { toast } from 'react-toastify';
 
 // https://stackoverflow.com/questions/55677600/typescript-how-to-pass-object-is-possibly-null-error
-const EditEmployeeForm: React.FC = (props: any) => {
+const EditEmployeeForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory()
-  const { singleEmployee } = useAppSelector((state) => state.employee);
-  const  {status}  = useAppSelector((state) => state.employee)
+  const { singleEmployee }:any = useAppSelector((state) => state.employee);
+  const  {status}:any  = useAppSelector((state) => state.employee)
   const notify = (msg: string) => toast(msg)
   // const { id }: any = useParams();
 
@@ -83,6 +83,7 @@ const EditEmployeeForm: React.FC = (props: any) => {
       history.push('/')
     }
   },[status, history])
+
 
 
 

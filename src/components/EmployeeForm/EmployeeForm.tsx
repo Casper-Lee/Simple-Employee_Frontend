@@ -7,11 +7,11 @@ import { toast } from 'react-toastify';
 import Card from "../Card/Card";
 import classes from "./EmployeeForm.module.css";
 
-const EmployeeForm: React.FC = (props: any, {employees, count, page, onChange, itemsPerPage = 10}) => {
+const EmployeeForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory()
-  const {status}  = useAppSelector((state) => state.employee)
-  const {errMsg} = useAppSelector((state) => state.employee)
+  const {status}: any  = useAppSelector((state) => state.employee)
+  const {errMsg}: any = useAppSelector((state) => state.employee)
   const notify = (msg: string) => toast(msg)
 
   // console.log('Error Message:',errMsg)
@@ -20,7 +20,7 @@ const EmployeeForm: React.FC = (props: any, {employees, count, page, onChange, i
     name: "",
     salary: 0,
     // department: ['HR', 'PS']
-    department: "HR",
+    department_id: "1",
   });
 
   useEffect(() => {
@@ -32,19 +32,19 @@ const EmployeeForm: React.FC = (props: any, {employees, count, page, onChange, i
     }else if(status === 'fulfilled') {
       console.log('Employee updated:', status)
       notify('Employee created!')
-      history.push('/')
+      history.push('/employee')
     }
   },[status, history])
 
   const submitHandler = (event: any) => {
     event.preventDefault();
 
-    console.log('emp department:',employee.department);
+    console.log('emp department:',employee.department_id);
     
     let data = {
       name: employee.name,
       salary: employee.salary,
-      department: employee.department,
+      department_id: employee.department_id,
     };
 
     dispatch(createEmployee(data));
@@ -76,13 +76,14 @@ const EmployeeForm: React.FC = (props: any, {employees, count, page, onChange, i
         </div>
         <div className={classes.control}>
           <label htmlFor="department">Department</label>
-           <select name="department" id="department"  value={employee.department} onChange={(e) => {
-             setEmployee({ ...employee, department: e.target.value });
+           <select name="department" id="department"  value={employee.department_id} onChange={(e) => {
+             setEmployee({ ...employee, department_id: e.target.value });
              console.log('department target value:', e.target.value);
             }
             }>
-              <option value="HR">HR</option>
-              <option value="PS">PS</option>
+              <option value="1">PS</option>
+              <option value="2">HR</option>
+              <option value="3">ADMIN</option>
             </select>
         </div>
         <div className={classes.actions}>

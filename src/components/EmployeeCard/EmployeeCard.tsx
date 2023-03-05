@@ -19,7 +19,15 @@ const customStyles = {
   },
 };
 
-const EmployeeCard = (props: any, employee: any) => {
+interface IEmp {
+  key: number;
+  id: number;
+  name: string;
+  salary: number;
+  department: string;
+}
+
+const EmployeeCard: React.FC<IEmp> = ({key, id, name, salary, department}) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
 
@@ -41,30 +49,30 @@ const EmployeeCard = (props: any, employee: any) => {
 
   useEffect(() => {
     // if(!params.employeeId) return;
-    dispatch(getEmployeeById(parseInt(props.id)));
-  }, [dispatch, props.id]);
+    dispatch(getEmployeeById(id));
+  }, [dispatch, id]);
 
   // console.log('props', props);
   // console.log('employee', employee);
 
-  const deleteEmployeeHandler = (event: any) => {
+  const deleteEmployeeHandler = () => {
     // if (!params.employeeId) return;
-    dispatch(deleteEmployee(parseInt(props.id)));
+    dispatch(deleteEmployee(id));
     console.log("Deleted!");
     // console.log('props.id:', props.id)
     history.push("/");
   };
 
   return (
-    <li className={classes.item}>
+    <li className={classes.item} >
       <div className={classes.row}>
         <div className={classes.column}>
-          <p className={classes.name}>{props.name}</p>
-          <p>{props.department}</p>
-          <p>${props.salary}</p>
+          <p className={classes.name}>{name}</p>
+          <p>{department}</p>
+          <p>${salary}</p>
         </div>
         <div className={classes.icons}>
-          <Link to={`/employee/${props.id}`}>
+          <Link to={`/employee/${id}`}>
             <EditIcon className={classes.editicon} />
           </Link>
           <DeleteIcon className={classes.deleteicon} onClick={openModal}  />

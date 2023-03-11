@@ -20,9 +20,6 @@ import { useAppDispatch } from "./store/store";
 // }
 
 function App() {
-  const dispatch = useAppDispatch();
-  const history = useHistory();
-
   // const initApp = useCallback(async () => {
   //   await dispatch(getAllEmployees());
   // }, [dispatch]);

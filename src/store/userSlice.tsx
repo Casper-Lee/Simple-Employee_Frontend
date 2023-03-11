@@ -16,22 +16,6 @@ const initialState: UserState = {
   users: [],
 };
 
-
-// export const getAllUsers = createAsyncThunk(
-//   "User/fetch",
-//   async (_, thunkAPI) => {
-//     try {
-//       const response = await axios.get("http://localhost:3000/employee/");
-//       console.log('nihao')
-//       return response.data.users;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error);
-//       // throw error
-//     }
-//   }
-// );
-
-
 export const createUser = createAsyncThunk<User, Object>(
   "create/createUser",
   async (data, thunkAPI) => {
